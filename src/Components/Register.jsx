@@ -1,8 +1,9 @@
 import React from "react";
+import Swal from "sweetalert2";
 
 class Register extends React.Component {
-    constructor(propss) {
-        super(propss);
+    constructor(props) {
+        super(props);
         this.state = {
             formUser: {
                 name: "",
@@ -20,10 +21,27 @@ class Register extends React.Component {
             body: JSON.stringify(this.state.formUser)
         })
             .then(response => {
+                console.log(response)
+                if (response.status === 400) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Ya existe un usuario con este correo"
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Registro Exitoso",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+
                 return response.json();
             })
             .then(myJson => {
                 this.clear();
+
             })
             .catch(error => console.log(error));
     };
@@ -51,38 +69,55 @@ class Register extends React.Component {
 
     render() {
         return (
-            <form onSubmit={this.registerUser}>
-                <h1>Registro de Usuario</h1>
-                <input
-                    onChange={this.saveUser}
-                    type="text"
-                    name="name"
-                    placeholder="Nombre"
-                    value={this.state.formUser.name}
-                />
-                <input
-                    onChange={this.saveUser}
-                    type="text"
-                    name="lastname"
-                    placeholder="Apellidos"
-                    value={this.state.formUser.lastname}
-                />
-                <input
-                    onChange={this.saveUser}
-                    type="email"
-                    name="email"
-                    placeholder="tu mejor e-mail"
-                    value={this.state.formUser.email}
-                />
-                <input
-                    onChange={this.saveUser}
-                    type="password"
-                    name="password"
-                    placeholder="Contraseña"
-                    value={this.state.formUser.password}
-                />
-                <input type="submit" />
-            </form>
+            <div>
+                <div className="container-form">
+                    <div className="imggradient" >
+                        <div className="text">
+                            la magia de ser quien eres.
+                            descubre nuevas formas de mejorar tu vida sin olvidarse de nada
+                                </div>
+                    </div>
+
+                    <div className="row">
+                        <form onSubmit={this.registerUser}>
+                            <h1>Registro de Usuario</h1>
+                            <div className="row">
+                                <input
+                                    onChange={this.saveUser}
+                                    type="text"
+                                    name="name"
+                                    placeholder="Nombre"
+                                    value={this.state.formUser.name}
+                                />
+                                <input
+                                    onChange={this.saveUser}
+                                    type="text"
+                                    name="lastname"
+                                    placeholder="Apellidos"
+                                    value={this.state.formUser.lastname}
+                                />
+                                <input
+                                    onChange={this.saveUser}
+                                    type="email"
+                                    name="email"
+                                    placeholder="tu mejor e-mail"
+                                    value={this.state.formUser.email}
+                                />
+                                <input
+                                    onChange={this.saveUser}
+                                    type="password"
+                                    name="password"
+                                    placeholder="Contraseña"
+                                    value={this.state.formUser.password}
+                                />
+                            </div>
+                            <br></br>
+                            <button type="submit"> Enviar </button>
+                        </form>
+                        <p>Ya tienes una cuenta <span onClick={this.props.isLogin}>Inicia sesion</span></p>
+                    </div>
+                </div>
+            </div>
         );
     }
 }

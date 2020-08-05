@@ -10,7 +10,7 @@ class App extends React.Component {
     super();
     this.state = {
       viewState: 'loading',
-      loged: 'Register',
+      loged: 'login',
       Loading: true
     };
   }
@@ -47,16 +47,14 @@ class App extends React.Component {
       case 'Register':
         return (
           <div>
-            <Register />
-            <button onClick={this.isRegister}>Login</button>
+            <Register isLogin={this.isRegister} />
           </div>
         );
 
       case 'login':
         return (
           <div>
-            <Login />
-            <button onClick={this.isLogin}>Registro</button>
+            <Login isRegister={this.isLogin} />
           </div>
         );
 
